@@ -1,2 +1,5 @@
 /.verify/
 node_modules/
+# Maintainer vendor rebuild: the manifests are kept as *.txt (see TOFU.md); never commit the temporary working copies.
+/tools/vendor/package.json
+/tools/vendor/package-lock.json
