@@ -63,10 +63,11 @@ Tuner.prototype.startRecord = function () {
       self.analyser.connect(self.scriptProcessor);
       self.scriptProcessor.connect(self.audioContext.destination);
       self.scriptProcessor.addEventListener("audioprocess", function (event) {
-        const frequency = self.pitchDetector.do(
-          event.inputBuffer.getChannelData(0)
+        const [frequency, clarity] = self.pitchDetector.findPitch(
+          event.inputBuffer.getChannelData(0),
+          self.audioContext.sampleRate
         );
-        if (frequency && self.onNoteDetected) {
+        if (frequency && clarity >= 0.9 && self.onNoteDetected) {
           const note = self.getNote(frequency);
           self.onNoteDetected({
             name: self.noteStrings[note % 12],
@@ -92,17 +93,11 @@ Tuner.prototype.init = function () {
     1
   );
 
-  const self = this;
-
-  aubio().then(function (aubio) {
-    self.pitchDetector = new aubio.Pitch(
-      "default",
-      self.bufferSize,
-      1,
-      self.audioContext.sampleRate
-    );
-    self.startRecord();
-  });
+  // Tofu: keep pitch detection local using the bundled MIT-licensed detector.
+  this.pitchDetector = Pitchy.PitchDetector.forFloat32Array(this.bufferSize);
+  this.pitchDetector.minVolumeDecibels = -60;
+  this.audioContext.resume();
+  this.startRecord();
 };
 
 /**

@@ -1,0 +1,14 @@
+{
+  "name": "tuner-vendor-build",
+  "private": true,
+  "scripts": {
+    "build": "esbuild node_modules/pitchy/index.js --bundle --format=iife --global-name=Pitchy --minify --legal-comments=inline --outfile=../../app/vendor/pitchy.min.js && node copy.mjs"
+  },
+  "dependencies": {
+    "pitchy": "4.1.0",
+    "sweetalert2": "9.17.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12"
+  }
+}
