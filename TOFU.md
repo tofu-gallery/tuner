@@ -56,6 +56,7 @@ After the license and manifest renames, the same checks were repeated on a copy 
 
 - The rebuild recipe above, run on a copy with `app/vendor/` emptied first, recreated all five vendored files byte for byte (SHA-256 identical to the committed files), and `node tools/vendor/verify.mjs` passed the same 12 reference-tone checks.
 - A local static server returned **200** for `/` and `/app/`, and both license notices are served as `text/plain` under their new names.
+- Tofu's static-hosting check of this pin's GitHub archive accepts the tree as a finished static site (the first pin was refused: two files with no served extension and two named like build configuration), and Tofu's safety check reports no findings.
 - A Chromium browser check supplied a generated 220 Hz MediaStream in place of microphone input. After the welcome dialog's OK, the root entry and the original `/app/` entry each showed **220.0 Hz / A3**. On the root entry, A4 calibration to 442 Hz updated the label and the A4 key's frequency and still read 442 after a reload; with Auto off, the A4 key played 442 Hz and stopped on the next click. No console errors or warnings were logged, and every request was same-origin and answered 200, except the browser's own `/favicon.ico` probe (404; the app declares no icon).
 
 ## Source and licenses
@@ -63,7 +64,7 @@ After the license and manifest renames, the same checks were repeated on a copy 
 - Upstream: https://github.com/qiuxiang/tuner
 - Upstream branch: `master`.
 - Upstream commit: `09188342fc56d4124221908a4388eb00c3a484cc`.
-- Adaptations branch: `tofu`; gallery pin: `pin/2026-10-23`.
+- Adaptations branch: `tofu`; gallery pin: `pin/2026-10-23.1`. It replaces `pin/2026-10-23`, which stays in place and still resolves to the earlier tree.
 - Fork: https://github.com/tofu-gallery/tuner
 - App: MIT, copyright (c) 2022 Qiu Xiang. The upstream `license` remains unchanged.
 - Pitchy 4.1.0: MIT; notice in `app/vendor/pitchy-LICENSE.txt`.
